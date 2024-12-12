@@ -4,37 +4,66 @@ import {
   SafeAreaView,
   Image,
   StyleSheet,
-  Button,
   Pressable,
+  TextInput,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "expo-router";
 import sign from "../assets/photos/signin.png";
-import { TextInput } from "react-native-gesture-handler";
-const signin = () => {
+
+const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <View style={{ backgroundColor: "#F5F5DC", height: "100%" }}>
-      <SafeAreaView>
+      <SafeAreaView style={{ marginTop: 70 }}>
+        {/* Logo */}
+
         <View style={styles.img}>
           <Image
             source={sign} // Replace with your logo
             style={styles.logo}
           />
         </View>
+
+        {/* Input Fields */}
         <View>
-          <TextInput placeholder="email" style={styles.input} />
+          <TextInput
+            placeholder="Email"
+            style={styles.input}
+            keyboardType="email-address"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
+          <TextInput
+            placeholder="Password"
+            style={styles.input}
+            secureTextEntry={true}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+          />
         </View>
 
+        {/* Conditional Rendering of Button */}
+        {email.trim() && password.trim() ? (
+          <View>
+            <Link href="/home" asChild>
+              <Pressable style={styles.btn}>
+                <Text style={styles.sig}>Sign In</Text>
+              </Pressable>
+            </Link>
+          </View>
+        ) : (
+          <Text style={styles.errorText}>Both fields are required!</Text>
+        )}
+
+        {/* for temp purpose only remove it later */}
         <View>
-          <Link href="/signin" asChild>
+          <Link href="/home" asChild>
             <Pressable style={styles.btn}>
               <Text style={styles.sig}>Sign In</Text>
             </Pressable>
-          </Link>
-        </View>
-        <View>
-          <Link href="/signup" style={styles.link}>
-            Create new Account
           </Link>
         </View>
       </SafeAreaView>
@@ -42,7 +71,7 @@ const signin = () => {
   );
 };
 
-export default signin;
+export default SignIn;
 
 const styles = StyleSheet.create({
   logo: {
@@ -51,14 +80,11 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   img: {
-    // margtinTop: 20,
     padding: 10,
-    margin: "auto",
+    alignItems: "center",
   },
-
   btn: {
     backgroundColor: "#228B22",
-
     padding: 10,
     marginTop: 20,
     margin: 10,
@@ -70,13 +96,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
   },
-
-  link: {
-    textAlign: "center",
-    color: "gray",
-    fontSize: 20,
-    margin: 10,
-  },
   input: {
     height: 40,
     borderColor: "gray",
@@ -84,5 +103,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingLeft: 10,
     borderRadius: 5,
+    margin: 10,
+  },
+  errorText: {
+    color: "red",
+    textAlign: "center",
+    marginTop: 10,
   },
 });
