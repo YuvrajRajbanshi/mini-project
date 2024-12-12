@@ -8,7 +8,9 @@ import {
   Image,
   ScrollView,
   Platform,
+  Pressable,
 } from "react-native";
+import { Link } from "expo-router";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -58,16 +60,33 @@ const Home = () => {
               contentContainerStyle={styles.horizontalScroll}
             >
               <View style={styles.trendingItem}>
-                <Text style={styles.trendingText}>🌿 Reusable Bottles</Text>
+                {/* <Text style={styles.trendingText}>🌿 Reusable Bottles</Text> */}
+                <Link href="/bottles" asChild>
+                  <Pressable>
+                    <Text style={styles.trendingText}>🌿 Reusable Bottles</Text>
+                  </Pressable>
+                </Link>
               </View>
               <View style={styles.trendingItem}>
-                <Text style={styles.trendingText}>🌱 Eco Notebooks</Text>
+                <Link href="/notebooks" asChild>
+                  <Pressable>
+                    <Text style={styles.trendingText}>🌱 Eco Notebooks</Text>
+                  </Pressable>
+                </Link>
               </View>
               <View style={styles.trendingItem}>
-                <Text style={styles.trendingText}>🌞 Solar Chargers</Text>
+                <Link href="/solar" asChild>
+                  <Pressable>
+                    <Text style={styles.trendingText}>🌞 Solar Chargers</Text>
+                  </Pressable>
+                </Link>
               </View>
               <View style={styles.trendingItem}>
-                <Text style={styles.trendingText}>♻️ Sustainable Bags</Text>
+                <Link href="/bags" asChild>
+                  <Pressable>
+                    <Text style={styles.trendingText}>♻️ Sustainable Bags</Text>
+                  </Pressable>
+                </Link>
               </View>
             </ScrollView>
           </View>
@@ -82,44 +101,45 @@ const Home = () => {
             />
 
             {/* Display Filtered Results */}
-            <Container>
-              <FlatList
-                data={searchQuery ? filteredData : []}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                  <TouchableOpacity style={styles.resultItem}>
-                    <Text style={styles.resultText}>{item.title}</Text>
-                  </TouchableOpacity>
-                )}
-                ListEmptyComponent={
-                  searchQuery && filteredData.length === 0 ? (
-                    <Text style={styles.noResults}>No results found</Text>
-                  ) : null
-                }
-              />
-            </Container>
+
+            <FlatList
+              data={searchQuery ? filteredData : []}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item }) => (
+                <TouchableOpacity style={styles.resultItem}>
+                  {/* <Text style={styles.resultText}>{item.title}</Text> */}
+                </TouchableOpacity>
+              )}
+              ListEmptyComponent={
+                searchQuery && filteredData.length === 0 ? (
+                  <Text style={styles.noResults}>No results found</Text>
+                ) : null
+              }
+            />
           </View>
 
           {/* Product List */}
-          <View style={{ margin: 10 }}>
-            <FlatList
-              data={searchQuery ? filteredData : ALL_ITEMS}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                <View style={styles.productCard}>
-                  <Image
-                    source={allImages[item.id - 1]}
-                    style={styles.menuImage}
-                  />
-                  <Text style={styles.productTitle}>{item.title}</Text>
-                  <Text style={styles.productDescription}>
-                    {item.description}
-                  </Text>
-                  <Text style={styles.productPrice}>₹ {item.price}</Text>
-                </View>
-              )}
-            />
-          </View>
+          <Container>
+            <View style={{ margin: 10 }}>
+              <FlatList
+                data={searchQuery ? filteredData : ALL_ITEMS}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <View style={styles.productCard}>
+                    <Image
+                      source={allImages[item.id - 1]}
+                      style={styles.menuImage}
+                    />
+                    <Text style={styles.productTitle}>{item.title}</Text>
+                    <Text style={styles.productDescription}>
+                      {item.description}
+                    </Text>
+                    <Text style={styles.productPrice}>₹ {item.price}</Text>
+                  </View>
+                )}
+              />
+            </View>
+          </Container>
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -190,6 +210,7 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   productCard: {
+    marginHorizontal: 30,
     backgroundColor: "white",
     borderRadius: 8,
     padding: 15,

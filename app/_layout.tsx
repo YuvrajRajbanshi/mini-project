@@ -39,6 +39,10 @@ export default function RootLayout() {
         <Stack.Screen name="signin" options={{ headerShown: false }} />
         <Stack.Screen name="signup" options={{ headerShown: false }} />
         <Stack.Screen name="home" options={{ headerShown: false }} />
+        <Stack.Screen name="bottles" options={{ headerShown: false }} />
+        <Stack.Screen name="notebooks" options={{ headerShown: false }} />
+        <Stack.Screen name="solor" options={{ headerShown: false }} />
+        <Stack.Screen name="bags" options={{ headerShown: false }} />
 
         <Stack.Screen name="+not-found" />
       </Stack>
